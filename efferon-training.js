@@ -291,9 +291,10 @@
     }
     var full = s.seatsLeft === 0;
     var seats = "";
-    if (s.capacity != null && s.seatsLeft != null) {
+    /* seats stay quiet: nothing unless the session is nearly full (anyone may join, the limit is a backstop) */
+    if (s.capacity != null && s.seatsLeft != null && s.seatsLeft <= 5) {
       seats = full ? '<div class="eft-seats low">Fully booked</div>'
-        : '<div class="eft-seats' + (s.seatsLeft <= 5 ? " low" : "") + '">' + s.seatsLeft + " of " + s.capacity + " seats left</div>";
+        : '<div class="eft-seats low">' + (s.seatsLeft === 1 ? "Last seat" : "Only " + s.seatsLeft + " seats left") + "</div>";
     }
     return '<button type="button" class="eft-btn" data-eft-reg="' + esc(s.id) + '"' + (full ? " disabled" : "") + ">Register</button>" +
       seats + '<button type="button" class="eft-ghost" data-eft-open="' + esc(s.id) + '">Details</button>';
